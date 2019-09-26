@@ -1,0 +1,6 @@
+<h2>Edit orders</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: orders_path(@conn, :update, @orders) %>
+
+<span><%= link "Back", to: orders_path(@conn, :index) %></span>

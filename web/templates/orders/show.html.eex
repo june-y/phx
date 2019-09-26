@@ -1,0 +1,28 @@
+<h2>Show orders</h2>
+
+<ul>
+
+  <li>
+    <strong>Couriers:</strong>
+    <%= @orders.couriers %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @orders.name %>
+  </li>
+
+  <li>
+    <strong>Address:</strong>
+    <%= @orders.address %>
+  </li>
+
+  <li>
+    <strong>Pharmacies serviced:</strong>
+    <%= @orders.pharmacies_serviced %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: orders_path(@conn, :edit, @orders) %></span>
+<span><%= link "Back", to: orders_path(@conn, :index) %></span>

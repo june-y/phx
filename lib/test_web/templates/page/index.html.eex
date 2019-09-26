@@ -1,0 +1,31 @@
+<html>
+<head>
+<script type="text/javascript">
+function login()
+{
+var e = document.getElementById("userButton");
+var usrVal = e.options[e.selectedIndex].value;
+var usrtxt = e.options[e.selectedIndex].text;
+var url = "http://localhost:4000/pharmacies";
+var newurl = new URL(usrVal,url);
+window.location.href=newurl;
+}
+</script>
+</head>
+<div class="jumbotron">
+  <h2><%= gettext "Welcome!" %></h2>
+<body>
+ <select id="userButton">
+  <option value="pharmacies">Pharmacies</option>
+  <option value="couriers">Couriers</option>
+</select> 
+
+ <button id="userButton" class="btn btn-primary" onclick="login()" >Login</button>
+
+<br><br>
+
+	
+</div>
+
+
+</body>

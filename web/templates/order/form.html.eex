@@ -1,0 +1,53 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :order_number, class: "control-label" %>
+    <%= number_input f, :order_number, class: "form-control" %>
+    <%= error_tag f, :order_number %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :patient_name, class: "control-label" %>
+    <%= text_input f, :patient_name, class: "form-control" %>
+    <%= error_tag f, :patient_name %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :patient_address, class: "control-label" %>
+    <%= textarea f, :patient_address, class: "form-control" %>
+    <%= error_tag f, :patient_address %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :pickup_date, class: "control-label" %>
+    <%= date_select f, :pickup_date, class: "form-control" %>
+    <%= error_tag f, :pickup_date %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :pickup_time, class: "control-label" %>
+    <%= time_select f, :pickup_time, class: "form-control" %>
+    <%= error_tag f, :pickup_time %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :is_delivered, class: "control-label" %>
+    <%= checkbox f, :is_delivered, class: "checkbox" %>
+    <%= error_tag f, :is_delivered %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :not_deliverable, class: "control-label" %>
+    <%= checkbox f, :not_deliverable, class: "checkbox" %>
+    <%= error_tag f, :not_deliverable %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>
