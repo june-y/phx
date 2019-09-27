@@ -1,3 +1,9 @@
+<html>
+<head>
+<script type="text/javascript" src="/home/june/test/assets/js/sort.js"></script>
+</head>
+
+<body>
 <h2>Listing Orders</h2>
 
 <table class="table">
@@ -6,7 +12,7 @@
       <th>Order number</th>
       <th>Patient name</th>
       <th>Patient address</th>
-      <th>Pickup date</th>
+      <th><a href="javascript:SortTable(4,'D','y-m-d');">Pickup date</th>
       <th>Pickup time</th>
       <th>Is delivered</th>
       <th>Not deliverable</th>
@@ -36,3 +42,5 @@
 </table>
 
 <span><%= link "New Order", to: order_path(@conn, :new) %></span>
+
+</body>

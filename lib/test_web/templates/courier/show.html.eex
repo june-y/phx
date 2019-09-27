@@ -20,38 +20,6 @@
 </ul>
 
 
-<h2>Show Orders for Courier</h2>
-
-
-<%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-
-
-<div class="form-group">
-  <%= label f, :is_delivered, class: "control-label" %>
-  <%= checkbox f, :is_delivered, class: "checkbox" %>
-  <%= error_tag f, :is_delivered %>
-</div>
-
-<div class="form-group">
-  <%= label f, :not_deliverable, class: "control-label" %>
-  <%= checkbox f, :not_deliverable, class: "checkbox" %>
-  <%= error_tag f, :not_deliverable %>
-</div>
-
-<div class="form-group">
-  <%= submit "Submit", class: "btn btn-primary" %>
-</div>
-<% end %>
-
-
-
-
-
 <span><%= link "Edit", to: courier_path(@conn, :edit, @courier) %></span>
 <span><%= link "Back", to: courier_path(@conn, :index) %></span>
+<span><%= link "View Orders", to: order_path(@conn, :index) %></span>

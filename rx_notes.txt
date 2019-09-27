@@ -1,0 +1,230 @@
+## Notes
+    testing for elixir/phoenix --- ExUnit
+
+
+  2 user types -
+  &nbsp;
+    pharmacy
+    courier
+
+
+  Objects and functions
+
+  login to an account
+  &nbsp;
+    pharmacy - enter an order (patient info(name,address),pickup_date, pickup_time)
+                view orders
+                cancel order
+
+    courier - view orders assigned to them
+              mark order as delivered OR undeliverable
+
+
+  Optional:
+    show orders by date
+    show orders by pharmacy AND by date
+    export orders to csv
+    add new courier
+    add new pharmacy
+    login and view orders from all pharmacies
+
+
+  objects -
+  pharmacy - has orders (writing access)
+  courier - has orders (read only),
+  order - patient info, pickup_date(set by courier, readable by all), pickup_time(set by courier, readable by all), is_delivered (courier only), unable_to_deliver (courier only)
+  user - is_pharmacy OR is_courier OR is_internal
+
+actual page views needed
+login page
+pharmacy - view orders, create order, cancel order
+courier - view orders, mark as deliver or failed
+internal - view orders (and sort), export orders, add new pharmacy, add new courier
+
+different pages depending if pharmacy or courier
+
+Ecto schema - through the phx.gen.schema
+Decide on the schemas for user, courier, pharmacy, orders
+
+
+mix phx.gen.schema
+
+user name:string password:string is_courier:boolean is_pharmacy:boolean is_internal:boolean
+
+pharmacy name:string address:string
+courier name:string address:text pharmacies_serviced:array:string
+orders order_number:integer patient_name patient_address:text pickup_date:date pickup_time:time
+internal -- just inherits pharmacy and courier but has diff functions?
+            order_id:references:orders
+            pharmacy_id:references:pharmacies
+            courier_id:references:couriers
+
+Users - context instead of module
+
+mix phx.gen.html Accounts User users name:string password:string is_courier:boolean is_pharmacy:boolean is_internal:boolean \
+username:string:unique
+
+Creating an actual auth system might be too much, so just seed with 3 users, names only needed for login
+
+accounts is a context to handle users
+??? context to handle orders
+
+One is to expose APIs on the Accounts contexts that allows us to efficiently fetch user data for use in the CMS system, or we can use database joins to fetch the dependent data
+
+
+in cms/page.ex
+belongs_to :author, Author
+
+
++   has_many :pages, Page
++   belongs_to :user, Hello.Accounts.User
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Main commands
+
+  mix deps.get
+  mix phoenix.server
+  mix do deps.get, compile
+
+
+
+~~~~~Instructions
+mix phoenix.new rxsystem
+config/dev.exs
+
+  adapter: Ecto.Adapters.Postgres,
+  username: "june_sd",
+  password: "sd_12@",
+  database: "scriptdrop",
+  hostname: "localhost",
+  pool_size: 10
+
+EXIT) shutdown: failed to start child: Phoenix.Endpoint.Handler
+        ** (EXIT) "plug_cowboy dependency missing"
+
+mix deps.get
+Start with users
+
+
+mix phx.gen.html Accounts UserType user_types type:string:unique actions:array:string
+
+router
+resources “/user_types”, UserTypeController
+mix ecto.migrate
+
+
+mix phx.gen.html Accounts User users name:string encrypted_password:string user_type_id:references:user_types
+router
+resources “/users”, UserController
+mix ecto.migrate
+
+
+Pharmacy
+mix phx.gen.html Order pharmacy pharmacies name:string address:string
+
+ resources "/pharmacies", PharmacyController
+
+Couriers
+mix phoenix.gen.html courier couriers name:string address:text pharmacies_serviced:array:string
+
+ resources "/couriers", CourierController
+
+Orders
+mix phoenix.gen.html Delivery order orders order_number:integer patient_name patient_address:text pickup_date:date pickup_time:time is_delivered:boolean not_deliverable:boolean
+
+ resources "/orders", OrderController
+
+{Internal
+mix phoenix.gen.html Pharmacy pharmacies name:string address:string}
+
+You currently have working index views for pharmacy/orders/couriers
+
+things to work with:
+
+persisted data (elixir mentions this)
+pharmacy - create an order
+	   view orders
+	   cancel orders
+
+courier - view orders
+	  mark orders as complete
+
+
+
+
+So users have a many-to-many relationship with accounts, and then an account has many products, a product has many properties and a property has many events.
+
+To the auth context went things like Session, User and Account. These were all primitive concepts used to authenticate and authorize a user against business objects.
+
+To the analytics context went Product, Property and (soon) Event. These are the core domain objects that the auth context is guarding access to.
+
+Finally, the operations context was created to scope access to the Health module which we use to generate the payload of health checks.
+
+Models:  Orders Pharmacies Couriers
+
+Ok ---
+
+phx.gen. is v different than phoenix - this has been screwing you
+
+you have orders, pharmacies and couriers
+
+pharmacies - new order
+	view orders (by day)
+	delete order
+
+courier - view order
+	  edit order (only undeliverable)
+
+change routes yourself to reflect that design
+index page is login (drop down)
+
+
+Seed data:
+BetterRx
+1275 Kinnear Road,
+Columbus, OH 43212
+
+BestRx
+123 Austin St,
+Austin, TX 78702
+
+Drugs R Us
+4925 LA Ave,
+Los Angeles, CA 90056
+
+Courier Companies:
+
+Same Day Delivery
+900 Trenton Lane,
+Trenton, NJ 08536
+Pharmacies Serviced:
+- BetterRx
+- BestRx
+
+Previous Day Delivery
+7433 LA Ct,
+Los Angeles, CA 90056
+Pharmacies Serviced:
+- Drugs R Us

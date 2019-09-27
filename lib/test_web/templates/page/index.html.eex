@@ -18,13 +18,13 @@ window.location.href=newurl;
  <select id="userButton">
   <option value="pharmacies">Pharmacies</option>
   <option value="couriers">Couriers</option>
-</select> 
+</select>
 
  <button id="userButton" class="btn btn-primary" onclick="login()" >Login</button>
 
 <br><br>
 
-	
+
 </div>
 
 
