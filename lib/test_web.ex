@@ -40,6 +40,7 @@ defmodule TestWeb do
       import TestWeb.Router.Helpers
       import TestWeb.ErrorHelpers
       import TestWeb.Gettext
+      #import TestWeb.InputHelpers
     end
   end
 

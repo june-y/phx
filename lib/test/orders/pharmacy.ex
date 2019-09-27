@@ -16,4 +16,5 @@ defmodule Test.Orders.Pharmacy do
     |> cast(attrs, [:name, :address])
     |> validate_required([:name, :address])
   end
+
 end

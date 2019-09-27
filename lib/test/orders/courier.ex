@@ -16,5 +16,6 @@ defmodule Test.Orders.Courier do
     courier
     |> cast(attrs, [:name, :address, :pharmacies_serviced])
     |> validate_required([:name, :address, :pharmacies_serviced])
+
   end
 end

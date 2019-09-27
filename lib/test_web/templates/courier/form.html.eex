@@ -18,6 +18,13 @@
   </div>
 
   <div class="form-group">
+    <%= label f, :pharmacies_serviced, class: "control-label" %>
+    <%= text_input f, :pharmacies_serviced, class: "form-control" %>
+    <%= error_tag f, :pharmacies_serviced %>
+  </div>
+
+
+  <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>
   </div>
 <% end %>
